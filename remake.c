@@ -1118,22 +1118,26 @@ remake_file (struct file *file)
 	   Pretend it was successfully remade.  */
 	file->update_status = 0;
       else
-#if defined(__APPLE__) || defined(NeXT) || defined(NeXT_PDO)
+#if 0
+# if defined(__APPLE__) || defined(NeXT) || defined(NeXT_PDO)
       {
 	char *name = file->name;
 	if ((next_flag & NEXT_VPATH_FLAG) && general_vpath_search(&name)) {
 	  free(name);
 	  file->update_status = 0;
 	} else
-#endif /* defined(__APPLE__) || defined(NeXT) || defined(NeXT_PDO) */
+# endif /* defined(__APPLE__) || defined(NeXT) || defined(NeXT_PDO) */
+#endif
         {
           /* This is a dependency file we cannot remake.  Fail.  */
           if (!rebuilding_makefiles || !file->dontcare)
             complain (file);
           file->update_status = 2;
         }
-#if defined(__APPLE__) || defined(NeXT) || defined(NeXT_PDO)
+#if 0
+# if defined(__APPLE__) || defined(NeXT) || defined(NeXT_PDO)
       }
+# endif
 #endif
     }
   else

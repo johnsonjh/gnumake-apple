@@ -551,14 +551,11 @@ int fatal_signal_mask;
 # endif
 #endif
 
-#if !defined HAVE_BSD_SIGNAL && !defined bsd_signal
-# if !defined HAVE_SIGACTION
-#  define bsd_signal signal
-# else
+#if !defined xbsd_signal
 typedef RETSIGTYPE (*bsd_signal_ret_t) ();
 
 static bsd_signal_ret_t
-bsd_signal (int sig, bsd_signal_ret_t func)
+xbsd_signal (int sig, bsd_signal_ret_t func)
 {
   struct sigaction act, oact;
   act.sa_handler = func;
@@ -569,7 +566,6 @@ bsd_signal (int sig, bsd_signal_ret_t func)
     return SIG_ERR;
   return oact.sa_handler;
 }
-# endif
 #endif
 
 static void
@@ -925,7 +921,8 @@ open_tmpfile(char **name, const char *template)
 #endif
 }
 
-#ifdef __APPLE__
+#if 0
+# ifdef __APPLE__
 static void
 define_makefilepath_variable(void)
 {
@@ -954,7 +951,8 @@ define_makefilepath_variable(void)
 	/* Fallback is $DEVELOPER_DIR/Makefiles */
 	define_variable("MAKEFILEPATH", 12, "$(shell /usr/bin/xcode-select -print-path 2>/dev/null || echo /Developer)/Makefiles", o_default, 1);
 }
-#endif /* __APPLE__ */
+# endif /* __APPLE__ */
+#endif
 
 #ifdef _AMIGA
 int
@@ -1037,8 +1035,8 @@ main (int argc, char **argv, char **envp)
 #endif
 
 #define	FATAL_SIG(sig)							      \
-  if (bsd_signal (sig, fatal_error_signal) == SIG_IGN)			      \
-    bsd_signal (sig, SIG_IGN);						      \
+  if (xbsd_signal (sig, fatal_error_signal) == SIG_IGN)			      \
+    xbsd_signal (sig, SIG_IGN);						      \
   else									      \
     ADD_SIG (sig);
 
@@ -1077,10 +1075,10 @@ main (int argc, char **argv, char **envp)
 
 #ifdef HAVE_WAIT_NOHANG
 # if defined SIGCHLD
-  (void) bsd_signal (SIGCHLD, SIG_DFL);
+  (void) xbsd_signal (SIGCHLD, SIG_DFL);
 # endif
 # if defined SIGCLD && SIGCLD != SIGCHLD
-  (void) bsd_signal (SIGCLD, SIG_DFL);
+  (void) xbsd_signal (SIGCLD, SIG_DFL);
 # endif
 #endif
 
@@ -1638,10 +1636,10 @@ main (int argc, char **argv, char **envp)
   {
     extern RETSIGTYPE child_handler PARAMS ((int sig));
 # if defined SIGCHLD
-    bsd_signal (SIGCHLD, child_handler);
+    xbsd_signal (SIGCHLD, child_handler);
 # endif
 # if defined SIGCLD && SIGCLD != SIGCHLD
-    bsd_signal (SIGCLD, child_handler);
+    xbsd_signal (SIGCLD, child_handler);
 # endif
   }
 #endif
@@ -1649,7 +1647,7 @@ main (int argc, char **argv, char **envp)
 
   /* Let the user send us SIGUSR1 to toggle the -d flag during the run.  */
 #ifdef SIGUSR1
-  bsd_signal (SIGUSR1, debug_signal_handler);
+  xbsd_signal (SIGUSR1, debug_signal_handler);
 #endif
 
   /* Define the initial list of suffixes for old-style rules.  */
@@ -1683,9 +1681,11 @@ main (int argc, char **argv, char **envp)
     default_goal_name = &v->value;
   }
 
-#ifdef __APPLE__
+#if 0
+# ifdef __APPLE__
   define_makefilepath_variable ();
-#endif /* __APPLE__ */
+# endif /* __APPLE__ */
+#endif
 
   /* Read all the makefiles.  */
 

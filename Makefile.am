@@ -16,7 +16,7 @@
 # GNU Make; see the file COPYING.  If not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
 
-AUTOMAKE_OPTIONS = 1.8 dist-bzip2 check-news ansi2knr
+AUTOMAKE_OPTIONS = 1.8 dist-bzip2 check-news
 ACLOCAL_AMFLAGS	=  -I config
 
 MAKE_HOST =	@MAKE_HOST@
@@ -28,7 +28,7 @@ if WINDOWSENV
   W32LIB =	-Lw32 -lw32
 endif
 
-SUBDIRS =	glob config po doc $(MAYBE_W32)
+SUBDIRS =	glob config po $(MAYBE_W32)
 
 bin_PROGRAMS =	make
 
@@ -57,7 +57,7 @@ endif
 
 man_MANS =	make.1
 
-DEFS =		-DLOCALEDIR=\"$(localedir)\" -DLIBDIR=\"$(libdir)\" -DINCLUDEDIR=\"$(includedir)\" @DEFS@
+DEFS =		-D__APPLE__ -DLOCALEDIR=\"$(localedir)\" -DLIBDIR=\"$(libdir)\" -DINCLUDEDIR=\"$(includedir)\" @DEFS@
 
 AM_CPPFLAGS =	$(GLOBINC)
 # Only process if target is MS-Windows
@@ -85,7 +85,7 @@ DISTCLEANFILES = build.sh
 # Forward targets
 
 html:
-	cd doc && $(MAKE) $(AM_MAKEFLAGS) $@
+	@true
 
 .PHONY: html
 

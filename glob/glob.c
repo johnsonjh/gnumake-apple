@@ -207,7 +207,7 @@ my_realloc (p, n)
 #endif /* __GNU_LIBRARY__ */
 
 
-#if !defined __alloca && !defined __GNU_LIBRARY__
+#if !defined __alloca
 
 # ifdef	__GNUC__
 #  undef alloca
@@ -252,6 +252,10 @@ extern char *alloca ();
 # ifndef __stat
 #  define __stat(fname, buf) __xstat (_STAT_VER, fname, buf)
 # endif
+#endif
+
+#ifndef __stat
+# define __stat stat
 #endif
 
 #if !(defined STDC_HEADERS || defined __GNU_LIBRARY__)

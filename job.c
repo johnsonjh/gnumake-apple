@@ -1175,7 +1175,7 @@ start_job_command (struct child *child)
 #else
       && (argv[1]
           && argv[1][0] == '-' && argv[1][1] == 'c' && argv[1][2] == '\0')
-#endif __APPLE__ || NeXT || NeXT_PDO
+#endif /* __APPLE__ || NeXT || NeXT_PDO */
       && (argv[2] && argv[2][0] == ':' && argv[2][1] == '\0')
       && argv[3] == NULL)
     {
@@ -1705,7 +1705,8 @@ new_job (struct file *file)
 						     file);
     }
 
-#if defined(__APPLE__) || defined(NeXT) || defined(NeXT_PDO) /* for NEXT_VPATH_FLAG support */
+#if 0
+# if defined(__APPLE__) || defined(NeXT) || defined(NeXT_PDO) /* for NEXT_VPATH_FLAG support */
   if (next_flag & NEXT_VPATH_FLAG) {
       for (i = 0; i < cmds->ncommand_lines; ++i) {
 	  char *line;
@@ -1716,7 +1717,8 @@ new_job (struct file *file)
 	  }
       }
   }
-#endif	/* __APPLE__ || NeXT || NeXT_PDO */
+# endif	/* __APPLE__ || NeXT || NeXT_PDO */
+#endif
 
   /* Start the command sequence, record it in a new
      `struct child', and add that to the chain.  */

@@ -53,7 +53,6 @@ char *alloca ();
 
 #define _GNU_SOURCE 1
 
-
 #ifdef  CRAY
 /* This must happen before #include <signal.h> so
    that the declaration therein is changed.  */
