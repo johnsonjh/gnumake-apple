@@ -6,7 +6,7 @@
 
 ## Support
 
-* Tested on **GNU/Linux**, **AIX** 7.3, **NetBSD** 9.3, **FreeBSD** 13.1, **OpenBSD** 7.2, and **macOS** 13.1.
+* Tested on **Linux**, **AIX** 7.3, **NetBSD** 9.3, **FreeBSD** 13.1, **OpenBSD** 7.2, and **macOS** 13.1.
 
 ## Notes
 
