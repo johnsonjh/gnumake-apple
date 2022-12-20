@@ -15,10 +15,10 @@
 1. Install `autoconf`, `automake`, `gmake`, and `gettext-utils` via ports or packages.
 
 2. Configure and build:
-   
+
    ```bash
-   env MAKE=gmake AUTOCONF_VERSION=2.71 AUTOMAKE_VERSION=1.16 \
-     autoreconf -vfi
-   ./configure --disable-dependency-tracking
-   gmake
+   env MAKE="gmake" AUTOCONF_VERSION="2.71" AUTOMAKE_VERSION="1.16" \
+     autoreconf -vfi && env CFLAGS="-Os -fno-strict-aliasing"       \
+     ./configure --disable-dependency-tracking &&                   \
+   gmake -j $(getconf _NPROCESSORS_ONLN)
    ```

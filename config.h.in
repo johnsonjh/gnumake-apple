@@ -35,6 +35,9 @@
 /* Define to 1 if you have the `atexit' function. */
 #undef HAVE_ATEXIT
 
+/* Define to 1 if you have the `bsd_signal' function. */
+#undef HAVE_BSD_SIGNAL
+
 /* Use case insensitive file names */
 #undef HAVE_CASE_INSENSITIVE_FS
 
